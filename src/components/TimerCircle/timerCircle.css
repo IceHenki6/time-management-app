@@ -1,0 +1,12 @@
+.timer-circle__title, .timer-circle__time, .timer-circle__sessions {
+  text-anchor: middle;
+  fill: #515151;
+  font-size: 24px;
+
+  font-weight: 600;
+}
+
+.timer-circle__time{
+  font-size: 48px;
+  color: var(--main-font-color)
+}

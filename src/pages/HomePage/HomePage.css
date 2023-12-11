@@ -1,0 +1,85 @@
+
+.home-page__container{
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--main-color);
+  color: var(--main-font-color);
+}
+
+#homepage-img_1{
+  position: absolute;
+  height: 100vh;
+  left: -10%;
+}
+
+#homepage-img_2{
+  position: absolute;
+  height: 100vh;
+  right: -10%;
+}
+
+.home-page__hero{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 99;
+  width: 600px;
+  height: 90%;
+  gap: 1.4em;
+  text-align: center;
+}
+
+.hero-title{
+  font-size: 48px;
+}
+
+.hero-description{
+  font-size: 18px;
+  color: var(--grey);
+}
+
+.not-logged__hero{
+  margin-top: 2em;
+  display: flex;
+  flex-direction: column;
+  gap: .8em;
+}
+
+
+.home-login__btn{
+  text-decoration: none;
+  color: white;
+  background-color: var(--main-font-color);
+  padding: 10px 35px;
+  height: 30px;
+  border-radius: 20px;
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.home-login__btn:hover{
+  background-color: var(--grey);
+}
+
+#expand-arrow{
+  position: absolute;
+  font-size: 80px;
+  bottom: -20px;
+  color: rgb(161, 161, 161);
+  cursor: pointer;
+}
+
+#expand-arrow:hover{
+  color: var(--grey);
+}
+
+
+

@@ -1,0 +1,75 @@
+
+.todo-item{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--white);
+  padding: 8px 25px;
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid #D7D7D7;
+  font-weight: 500;
+  height: 55px;
+}
+
+.left-side{
+  display: flex;
+  /* justify-content: space-around; */
+  gap: 10px;
+  align-items: center;
+}
+
+.task-date, .task-time{
+  color: var(--light-gray);
+  font-size: 14px;
+}
+
+.task-name{
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.right-side{
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.timer-btn{
+  cursor: pointer;
+  background: var(--blue);
+  border: none;
+  border-radius: 5px;
+  width: 150px;
+  height: 35px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.check-btn{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background: transparent;
+  width: auto;
+  height: auto;
+  padding: 0;
+  cursor: pointer;
+}
+
+.check-box__unchecked{
+  font-size: 24px;
+  color: var(--light-gray);
+}
+
+.check-btn:hover .check-box__unchecked{
+  color: var(--blue);
+}
+
+.check-box__checked{
+  color: var(--blue);
+}
+
+

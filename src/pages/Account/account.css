@@ -1,0 +1,133 @@
+.account-container{
+  grid-template-areas: 
+    "sidebar account account account"
+    "sidebar account account account"
+    "sidebar account account account"
+    "sidebar account account account";
+}
+
+.account{
+  display: flex;
+  flex-direction: column;
+  grid-area: account;
+  width: 100%;
+  padding: 40px;
+  background: var(--white);
+  border-radius: 10px;
+}
+
+.account-title__container{
+  flex: .2;
+}
+
+.account-name{
+  display: flex;
+  font-size: 20px;
+  gap: 1em;
+  color: #5c5248;
+}
+
+.account-items{
+  flex: 6;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 60px;
+}
+
+.username-form__container h3, .password-form__container h3, .email-container h3{
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+
+.username-form__container form{
+  display: flex;
+  align-items: flex-end;
+  gap: 1.5em;
+}
+
+.password-form__container form{
+  display: flex;
+  align-items: flex-end;
+  gap: 1.5em;
+}
+
+.password-form__container form label{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: .5em;
+  color: #5c5248;
+}
+
+#update-password__button{
+  height: 45px;
+  width: 200px;
+  background: var(--blue);
+  border: none;
+  color: white;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+
+#username-label{
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.account-input{
+  height: 40px;
+  border-radius: 5px;
+  padding: 6px 15px;
+  border: .7px solid rgb(155, 155, 155);
+  width: 320px;
+  font-size: 14px;
+}
+
+.account-input:focus{
+  outline: none;
+}
+
+#update-username__button{
+  width: 180px;
+  height: 45px;
+  background-color: #dfdfdf;
+  color: var(--main-font-color);
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#update-username__button:hover{
+  background-color: #d7d7d7;
+}
+
+.account-input__error{
+  position: absolute;
+  bottom: -40px;
+  display: none;
+}
+
+
+.account-input[focused="true"]:invalid{
+  border-color: red;
+}
+
+.account-input[focused="true"]:invalid ~ .account-input__error{
+  display: block;
+}
+
+#settings-img{
+  position: absolute;
+  width: 28%;
+  right: 0;
+  bottom: 1%;
+}

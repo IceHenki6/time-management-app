@@ -1,0 +1,92 @@
+
+.tasks{
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  flex-direction: column;
+  height: 90%;
+  width: 100%;
+  /* border: 3px solid aquamarine; */
+  gap: 1.3em;
+  overflow-y: scroll;
+}
+
+.task{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  background: var(--white);
+  padding: 8px 25px;
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid #D7D7D7;
+}
+
+.task-preview{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  font-weight: 500;
+  height: 50px;
+}
+
+.task-name__list{
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.task-details__container{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 16px 0;
+}
+
+
+.task-details{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: .6em;
+}
+
+.task-details div{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: rgb(87, 87, 87);
+  gap: 1em;
+}
+
+.task-details div h3 {
+  font-size: 15px;
+  color: rgb(70, 70, 70);
+  font-weight: 500;
+}
+
+.expand-icon{
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.continue-btn{
+  background-color: black;
+  height: 40px;
+  width: 150px;
+  border: none;
+  border-radius: 20px;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.continue-btn:hover{
+  background-color: #363636;
+}
+
+.delete-icon{
+  color: red;
+  cursor: pointer;
+}

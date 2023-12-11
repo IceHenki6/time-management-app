@@ -1,0 +1,50 @@
+.all-tasks__container{
+  grid-template-areas: 
+    "sidebar all-tasks all-tasks all-tasks"
+    "sidebar all-tasks all-tasks all-tasks"
+    "sidebar all-tasks all-tasks all-tasks"
+    "sidebar all-tasks all-tasks all-tasks";
+}
+
+.all-tasks{
+  position: relative;
+  grid-area: all-tasks;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--white);
+  border-radius: 10px;
+  box-shadow: var(--light-shadow);
+  padding: 30px;
+  gap: 2.5em;
+}
+
+.all-tasks__title{
+  font-size: 32px;
+  align-self: flex-start;
+}
+
+#task-list-img__one{
+  position: absolute;
+  left: 2%;
+  bottom: 6%;
+  width: 25%;
+  z-index: -1;
+}
+
+#task-list-img__two{
+  position: absolute;
+  right: 0;
+  top: 9%;
+  width: 35%;
+  z-index: -1;
+}
+
+/* .all-tasks .tasks{
+  height: 400px;
+  box-shadow: 5px 10px 10px 0px rgba(81, 81, 81, 0.382);
+} */
+

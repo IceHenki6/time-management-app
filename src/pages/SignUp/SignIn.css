@@ -1,0 +1,27 @@
+.signin-input{
+  height: 50px;
+  border: 1px solid grey;
+  border-radius: 30px;
+  padding: 5px 18px;
+  font-size: 16px;
+  background-color: var(--main-color);
+}
+
+.signin-input:invalid[focused="true"]{
+  color: red;
+  border: 1px solid red;
+}
+
+
+.signin-input:invalid[focused="true"] ~ .input-error__msg{
+  display: block;
+}
+
+#signin-btn{
+  width: 100%;
+  margin-top: 5px;
+  height: 60px;
+  background-color: var(--main-font-color);
+  font-weight: 700;
+  font-size: 18px;
+}
