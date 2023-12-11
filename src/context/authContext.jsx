@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react"
+import { createContext, useState } from "react"
 import axios from "../api/axios"
 
 export const AuthContext = createContext()
@@ -16,20 +16,7 @@ export const AuthContextProvider = ({children}) => {
         } 
       )
     setAuth(response.data)
-    console.log(response.data)
   }
-
-  // const logout = () => {
-  //   setCurrentUser(null)
-  // }
-
-  // const refreshUser = (newUser) => {
-  //   setCurrentUser(newUser)
-  // }
-
-  // useEffect(() => {
-  //   localStorage.setItem('user', JSON.stringify(currentUser))
-  // }, [currentUser])
 
   return(
     <AuthContext.Provider value={{auth, login, setAuth}}>{children}</AuthContext.Provider>

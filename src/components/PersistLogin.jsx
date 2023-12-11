@@ -14,28 +14,21 @@ const PersistLogin = () => {
     let isMounted = true
 
     const verifyRefreshToken = async () => {
-      console.log('verify refresh token running')
       try {
         await refresh()
       } catch (error) {
         console.error(error)
       } finally {
-        console.log(`is mounted: ${isMounted}`)
         isMounted && setIsLoading(false)
       }
     }
 
-    console.log(`shit token: ${auth?.token}`)
 
     !auth?.token ? verifyRefreshToken() : setIsLoading(false)
 
     return () => isMounted = false
   }, [])
 
-  useEffect(() => {
-    console.log(`isLoading: ${isLoading}`)
-    console.log(`aT: ${JSON.stringify(auth?.token)}`)
-  }, [isLoading])
 
   return (
     <>

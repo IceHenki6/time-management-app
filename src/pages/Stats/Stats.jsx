@@ -1,9 +1,7 @@
-import { AuthContext } from "../../context/authContext"
-import { useContext, useEffect, useState } from "react"
-import { ResponsiveContainer, Bar, BarChart, Tooltip, XAxis, YAxis, Legend, Line, LineChart } from "recharts"
+import { useEffect, useState } from "react"
+import { ResponsiveContainer, Bar, BarChart, Tooltip, XAxis, Line, LineChart } from "recharts"
 import Sidebar from "../../components/Sidebar/Sidebar"
 import './stats.css'
-import notificationContext from "../../context/notificationContext"
 import sessionHelper from "../../helpers/sessionHelper"
 import ProgressCircle from "../../components/ProgressCircle"
 import useAxiosPrivate from "../../hooks/useAxiosPrivate"
@@ -33,7 +31,6 @@ const Stats = () => {
           const sessionsOfTheYear = sessionHelper.sessionsOfAYear(sessionData, currentDate)
           const weeklySessions = sessionHelper.sessionsOfAWeek(sessionData, currentDate)
   
-          console.log(`Response: ${sessionData[0]}`)
           const dailyProgress = sessionHelper.dailyTimeWorked(sessionData, currentDate)
           const monthTimeWorked = sessionHelper.timeWorkedMonth(sessionData, currentDate)
           const yearTimeWorked = sessionHelper.timeWorkedYear(sessionData, currentDate)
@@ -142,7 +139,6 @@ const Stats = () => {
         </div>
 
       </div>
-      {/* <Notification/> */}
     </div>
   )
 }

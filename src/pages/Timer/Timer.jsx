@@ -1,12 +1,9 @@
 import './Timer.css'
 import { React, useState, useEffect, useContext } from "react";
 import { TaskContext } from '../../context/taskContext';
-import { AuthContext } from "../../context/authContext";
-import taskService from "../../services/taskService";
 import { useNavigate } from 'react-router-dom';
 
 import Sidebar from '../../components/Sidebar/Sidebar';
-import sessionService from '../../services/sessionService';
 import FinishedSession from '../../components/FinishedSession/FinishedSession';
 import TimeSelector from '../../components/TimeSelector/TimeSelector';
 import TimerCircle from '../../components/TimerCircle/TimerCircle';
@@ -127,7 +124,6 @@ const Timer = () => {
         setShowPulser(true)
         if (updatedSessionCounter !== sessionData.numberOfSessions) {
           setTimeout(() => {
-            console.log('AGUANTEBOOCAA')
             setSessionProgress(0)
             setBreakTimeLeft(1 * 60)
             setIsBreakTimeRunning(true)
@@ -207,7 +203,7 @@ const Timer = () => {
 
   const handleGoBack = () => {
     setTask(null)
-    navigate('/timeManager')
+    navigate('/todo')
   }
 
 

@@ -1,25 +1,17 @@
 import { useState, useRef, useEffect, useContext } from 'react';
 import './TodoList.css'
-// import Tasks from '../../components/Tasks';
-// import taskService from '../../services/taskService';
 import Sidebar from '../../components/Sidebar/Sidebar';
-import { AuthContext } from '../../context/authContext';
-import { useNavigate } from 'react-router-dom';
-import notificationContext from '../../context/notificationContext';
 import TodoItem from '../../components/TodoList/TodoItem';
 
 import CompletedItem from '../../components/TodoList/CompletedItem';
 import NoTasks from '../../components/NoTasks/NoTasks';
-import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import useProtectedResource from '../../hooks/useResource';
 
 
 
 const AddTaskForm = ({ toggleNewTaskInput, createTask }) => {
   const [taskName, setTaskName] = useState('')
-  const { currentUser } = useContext(AuthContext)
   const [focused, setFocused] = useState(false)
-  const axiosPrivate = useAxiosPrivate()
 
   const addTask = async (event) => {
     event.preventDefault()
@@ -65,18 +57,11 @@ const AddTaskForm = ({ toggleNewTaskInput, createTask }) => {
 
 
 const TodoList = () => {
-  // const [tasks, setTasks] = useState([])
   const [todoTasks, setTodoTasks] = useState([])
   const [lastTenCompleted, setLastTenCompleted] = useState([])
   const [showNewTaskInput, setShowNewTaskInput] = useState(false)
-  const [showTimeSelectors, setShowTaskSelectors] = useState(false)
-  const axiosPrivate = useAxiosPrivate()
   const [tasks, tasksService] = useProtectedResource('/api/tasks')
 
-  const { currentUser } = useContext(AuthContext)
-  const navigate = useNavigate()
-
-  const [notification, dispatch] = useContext(notificationContext)
 
   useEffect(() => {
     const completedTasks = tasks.filter(task => task.completed)
@@ -100,9 +85,6 @@ const TodoList = () => {
   const toggleNewTaskInput = () => {
     setShowNewTaskInput(!showNewTaskInput)
   }
-
-
-  const taskFormRef = useRef()
 
 
   return (
