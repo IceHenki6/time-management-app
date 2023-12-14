@@ -95,7 +95,7 @@
   color: var(--blue);
 }
 
-.control:active > span{
+.control > span:active{
   color: var(--blue)
 }
 
@@ -179,4 +179,56 @@ input[type="number"]::-webkit-outer-spin-button {
   color: white;
   cursor: pointer;
   font-size: 18px;
+}
+
+
+@media only screen and (max-width: 768px){
+  .time-selectors__container{
+    padding: 15px;
+    border-radius: 0;
+    gap: 1.5em;
+  }
+
+  .time-selectors{
+    flex-direction: column;
+    width: 100%;
+    justify-content: flex-start;
+    gap: .8em;
+  }
+  .selector-container{
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+    padding: 0 15px;
+  }
+
+  .selector{
+    width: 70px;
+    height: 70px;
+    border-radius: 5px;
+    box-shadow: none;
+  }
+
+  .control span{
+    font-size: 30px;
+  }
+  .number-input{
+    font-size: 16px;
+  }
+
+  .selector-container h1{
+    font-size: 16px;
+  }
+
+
+
+  .daily-goal__container h3{
+    font-size: 14px;
+  }
+
+  .close-btn{
+    right: 2px;
+    top: 2px;
+  }
 }

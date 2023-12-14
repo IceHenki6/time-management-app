@@ -8,6 +8,7 @@ import FinishedSession from '../../components/FinishedSession/FinishedSession';
 import TimeSelector from '../../components/TimeSelector/TimeSelector';
 import TimerCircle from '../../components/TimerCircle/TimerCircle';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+import useWindowSize from '../../hooks/useWindowSize';
 
 
 const Timer = () => {
@@ -21,11 +22,14 @@ const Timer = () => {
   const [sessionTimeLeft, setSessionTimeLeft] = useState(1 * 60)
   const [showFinishedSessions, setShowFinishedSessions] = useState(false)
   const [sessionCounter, setSessionCounter] = useState(0)
-  // const [lastDuration, setLastDuration] = useState(1)
-  // const [sliderValue, setSliderValue] = useState(1)
+ 
   const [initialSessionTime, setInitialSessionTime] = useState(1)
   const [sessionProgress, setSessionProgress] = useState(0)
   const [sessionTimerStarted, setSessionTimerStarted] = useState(false)
+
+  //get window size
+  const width = useWindowSize()
+  
 
   //breakTime
   const [isBreakTimeRunning, setIsBreakTimeRunning] = useState(false)
@@ -227,7 +231,7 @@ const Timer = () => {
         {sessionData && <div className="time-display__container">
           {(isSessionTimeRunning || !sessionTimerStarted || !isBreakTimeRunning) && <TimerCircle 
             width={400}
-            radius={180} 
+            radius={ width > 768 ? 190 : 145} 
             percentage={sessionProgress} 
             title={"Session"} 
             minutes={time.minutes}
@@ -238,7 +242,7 @@ const Timer = () => {
           }
           {isBreakTimeRunning && <TimerCircle 
             width={400}
-            radius={180} 
+            radius={width > 768 ? 190 : 145} 
             percentage={breakProgress} 
             title={"Break"} 
             minutes={bTime.minutes}

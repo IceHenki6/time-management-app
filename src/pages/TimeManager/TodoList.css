@@ -245,3 +245,46 @@
   bottom: 10%;
   width: 22%;
 }
+
+@media only screen and (max-width: 768px) {
+
+  .time-manager__container{
+    grid-template-areas: 
+      ". . ."
+      "time-manager time-manager time-manager"
+      "time-manager time-manager time-manager";
+    padding: 0;
+    
+  }
+
+  .todo-list__container{
+    padding: 20px;
+    border-radius: 0;
+  }
+
+  .task-form__container{
+    background-color: rgba(217, 217, 217, 0.371);
+  }
+
+  .task-form__container div{
+    width: 100%;
+    height: 400px;
+  }
+
+  #task-form{
+    flex-direction: column;
+    gap: 2em;
+  }
+
+
+  #task-form button{
+    flex: auto;
+    height: 50px;
+    width: 150px;
+  }
+
+  #task-name__input{
+    flex: auto;
+    height: 60px;
+  }
+}

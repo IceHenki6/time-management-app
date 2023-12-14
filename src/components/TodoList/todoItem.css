@@ -73,3 +73,19 @@
 }
 
 
+
+@media only screen and (max-width: 768px) {
+  .task-date, .task-time{
+    display: none;
+  }
+
+  .todo-item{
+    padding: 8px 15px;
+    margin-bottom: 5px;
+  }
+
+  .timer-btn{
+    width: 115px;
+  }
+}
+
