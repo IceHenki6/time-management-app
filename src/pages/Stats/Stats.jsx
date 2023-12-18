@@ -5,6 +5,7 @@ import './stats.css'
 import sessionHelper from "../../helpers/sessionHelper"
 import ProgressCircle from "../../components/ProgressCircle"
 import useAxiosPrivate from "../../hooks/useAxiosPrivate"
+import useWindowSize from '../../hooks/useWindowSize'
 
 const Stats = () => {
   const [dayData, setDayData] = useState([])
@@ -18,6 +19,8 @@ const Stats = () => {
   const [dailyGoal, setDailyGoal] = useState(parseInt(localStorage.getItem('dailyGoal')) || 1)
 
   const axiosPrivate = useAxiosPrivate()
+
+  const windowWidth = useWindowSize()
   useEffect(() => {
     let unsubscribed = false
     const getData = async () => {
@@ -121,7 +124,7 @@ const Stats = () => {
           </div>
         </div>
 
-        <div className="week-stats">
+        {windowWidth > 768 && <div className="week-stats">
           {/* <h1 id="week">Your focus time this week</h1> */}
           <div className="week-chart">
             <ResponsiveContainer width="99%" height="100%" >
@@ -136,7 +139,7 @@ const Stats = () => {
               </BarChart>
             </ResponsiveContainer>
           </div>
-        </div>
+        </div>}
 
       </div>
     </div>

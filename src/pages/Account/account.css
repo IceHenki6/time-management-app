@@ -14,6 +14,7 @@
   padding: 40px;
   background: var(--white);
   border-radius: 10px;
+  gap: 3em;
 }
 
 .account-title__container{
@@ -31,7 +32,7 @@
   flex: 6;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
   gap: 60px;
 }
 
@@ -130,4 +131,26 @@
   width: 28%;
   right: 0;
   bottom: 1%;
+}
+
+@media only screen and (max-width: 768px){
+  .account-container{
+    display: flex;
+    flex-direction: column;
+    
+    padding: 0;
+  }
+
+  .account{
+    border-radius: 0;
+    padding: 15px;
+    /* height: auto; */
+    height: auto;
+  }
+
+  .password-form__container form{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }

@@ -48,3 +48,15 @@
   box-shadow: 5px 10px 10px 0px rgba(81, 81, 81, 0.382);
 } */
 
+@media only screen and (max-width: 768px){
+  .all-tasks__container{
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+  }
+
+  .all-tasks{
+    border-radius: 0;
+    padding: 15px;
+  }
+}

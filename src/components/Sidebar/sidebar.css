@@ -128,4 +128,8 @@ nav a{
   .sidebar-container{
     display: none;
   }
+
+  nav a{
+    border-radius: 0;
+  }
 }

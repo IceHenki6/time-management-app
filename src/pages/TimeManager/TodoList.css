@@ -250,16 +250,16 @@
 
   .time-manager__container{
     grid-template-areas: 
-      ". . ."
+      "mobile-navbar mobile-navbar mobile-navbar"
       "time-manager time-manager time-manager"
       "time-manager time-manager time-manager";
     padding: 0;
-    
   }
 
   .todo-list__container{
     padding: 20px;
     border-radius: 0;
+    box-shadow: none;
   }
 
   .task-form__container{

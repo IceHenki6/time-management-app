@@ -124,6 +124,10 @@ body{
     gap: .4em;
     padding: 10px;
   }
+
+  body{
+    background: var(--white);
+  }
 }
 
 

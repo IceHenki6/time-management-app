@@ -90,3 +90,9 @@
   color: red;
   cursor: pointer;
 }
+
+@media only screen and (max-width: 768px){
+  .task{
+    padding: 8px 15px;
+  }
+}

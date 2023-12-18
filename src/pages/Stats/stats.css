@@ -76,13 +76,13 @@
   color: var(--grey);
   text-transform: uppercase;
   margin-top: 0;
-  margin-bottom: 12%;
+  margin-bottom: 20px;
 }
 
 #percentage{
   font-weight: 400;
   font-size: 20px;
-  margin-bottom: 10%;
+  margin-bottom: 20px;
 }
 
 #minutes{
@@ -218,4 +218,36 @@
 }
 
 
+@media only screen and (max-width: 768px) {
+  .stats{
+    grid-template-areas: 
+      ". . ."
+      "chart-container chart-container chart-container"
+      "chart-container chart-container chart-container"
+      "chart-container chart-container chart-container";
+    padding: 0;
+  }
 
+  .chart-container{
+    display: flex;
+    flex-direction: column;
+    border-radius: 0;
+    /* grid-template-columns: 1fr ;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    grid-gap: 10px; */
+    grid-area: chart-container;
+    /* grid-template-areas: 
+      "day-stats"
+      "month-stats"
+      "year-stats"
+      "week-stats"
+      "week-stats"; */
+    color: var(--main-font-color);
+    background: var(--white);
+    padding: 15px 15px;
+  }
+
+  .week-chart{
+    display: none;
+  }
+}

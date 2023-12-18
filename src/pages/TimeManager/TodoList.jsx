@@ -6,6 +6,7 @@ import TodoItem from '../../components/TodoList/TodoItem';
 import CompletedItem from '../../components/TodoList/CompletedItem';
 import NoTasks from '../../components/NoTasks/NoTasks';
 import useProtectedResource from '../../hooks/useResource';
+import MobileNavbar from '../../components/MobileNavbar/MobileNavbar';
 
 
 
@@ -90,6 +91,7 @@ const TodoList = () => {
   return (
     <div className="page-container time-manager__container">
       <Sidebar />
+      <MobileNavbar />
       <div className="time-manager">
         <div className="todo-list__container">
           <div className="todo-header">
