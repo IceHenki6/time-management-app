@@ -1,0 +1,15 @@
+.logo{
+  display: flex;
+  gap: .4rem;
+  align-items: center;
+}
+
+.logo h1{
+  font-size: 1.6rem;
+  font-weight: 500;
+}
+
+.logo span{
+  font-size: 2rem;
+  color: var(--blue)
+}

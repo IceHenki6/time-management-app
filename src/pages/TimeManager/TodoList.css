@@ -246,7 +246,7 @@
   width: 22%;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 1024px) {
 
   .time-manager__container{
     grid-template-areas: 

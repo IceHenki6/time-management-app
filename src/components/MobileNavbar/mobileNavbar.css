@@ -14,7 +14,7 @@
   right: 0;
   top: 0;
   bottom: 0;
-  background: white;
+  background: var(--white);
   z-index: 1;
   display: flex;
   justify-content: center;
@@ -60,4 +60,29 @@
   color: var(--white);
   background: var(--blue);
   box-shadow: var(--blue-shadow);
+}
+
+.hamburger-btn{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background: var(--white);
+  /* box-shadow: var(--light-shadow); */
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.hamburger-btn span{
+  font-size: 2rem;
+}
+
+.hamburger-btn:active{
+  background-color: var(--main-color);
+}
+
+@media only screen and (min-width: 1025px){
+  .mobile-navbar{
+    display: none;
+  }
 }

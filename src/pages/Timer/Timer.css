@@ -276,10 +276,10 @@
   width: 25%;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 1024px) {
   .timer-container{
     grid-template-areas: 
-      ". . ."
+      "mobile-navbar mobile-navbar mobile-navbar"
       "timer timer timer"
       "timer timer timer";
     padding: 0;

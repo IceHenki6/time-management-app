@@ -9,6 +9,7 @@ import TimeSelector from '../../components/TimeSelector/TimeSelector';
 import TimerCircle from '../../components/TimerCircle/TimerCircle';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import useWindowSize from '../../hooks/useWindowSize';
+import MobileNavbar from '../../components/MobileNavbar/MobileNavbar';
 
 
 const Timer = () => {
@@ -227,6 +228,7 @@ const Timer = () => {
   return (
     <div className="page-container timer-container">
       <Sidebar />
+      <MobileNavbar />
       <div className="timer">
         {sessionData && <div className="time-display__container">
           {(isSessionTimeRunning || !sessionTimerStarted || !isBreakTimeRunning) && <TimerCircle 

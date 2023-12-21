@@ -1,6 +1,7 @@
 import { useState } from "react"
 import './mobileNavbar.css'
 import { NavLink, useNavigate } from "react-router-dom"
+import Logo from "../Logo/Logo"
 
 const MobileNavbar = () => {
   const [visible, setVisible] = useState(false)
@@ -14,7 +15,7 @@ const MobileNavbar = () => {
 
   return (
     <div className="mobile-navbar">
-      <h1 className="mobile-navbar__logo">logo</h1>
+      <Logo />
 
       <button className="hamburger-btn" onClick={toggleVisibility}><span className="material-symbols-outlined">menu</span></button>
       <div className="menu" style={show}>
@@ -75,7 +76,7 @@ const MobileNavbar = () => {
             </div>
           </div> */}
         </nav>
-        <button className="close-menu" onClick={toggleVisibility}><span className="material-symbols-outlined">close</span></button>
+        <button className="close-btn" onClick={toggleVisibility}><span className="material-symbols-outlined">close</span></button>
       </div>
     </div>
   )
