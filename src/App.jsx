@@ -25,7 +25,10 @@ function App() {
     <Routes>
       <Route path='/' element={<Layout />}>
         {/* public */}
-        <Route path='/' element={<HomePage />} />
+        <Route element={<PersistLogin/>}>
+          <Route path='/' element={<HomePage />} />
+        </Route>
+        
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<SignUp />} />
 

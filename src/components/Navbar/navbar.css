@@ -1,7 +1,27 @@
 .navbar{
-  width: 100%;
-  height: 100%;
+  height: 5rem;
   background-color: var(--white);
-  grid-area: navbar;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   /* box-shadow: var(--light-shadow); */
 }
+
+.home-nav__login{
+  font-size: 1rem;
+}
+
+.navbar-items__container div{
+  display: flex;
+  gap: 2rem;
+}
+
+.home-nav__register{
+  padding: 0 1.5em;
+  background-color: var(--blue);
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+}
+

@@ -5,7 +5,6 @@ import { AuthContext } from "../context/authContext";
 const Protected = () => {
   const { auth } = useContext(AuthContext)
   const location = useLocation()
-
   return (
     auth?.token 
       ? <Outlet /> 
