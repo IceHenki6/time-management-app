@@ -39,13 +39,11 @@ const HomePage = () => {
           <h3 className="hero-description">Let Every Second Count Towards Your Success!</h3>
           {!auth.token &&
             <div className="not-logged__hero">
-              <h2><Link className="home-login__btn" to={"/login"}>Start now!</Link></h2>
+              <h2><Link className="home-start__btn" to={"/login"}>Get Started</Link></h2>
             </div>
           }
           {auth.token && <div className="logged-hero">
-            <button onClick={() => {
-              navigate('/todo')
-            }}>Start</button>
+          <h2><Link className="home-start__btn" to={"/todo"}>Start</Link></h2>
           </div>}
         </div>
 

@@ -1,9 +1,16 @@
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import Logo from '../Logo/Logo'
 import './navbar.css'
+import useLogout from '../../hooks/useLogout'
 
-const Navbar = ({auth}) => {
+const Navbar = ({ auth }) => {
+  const logout = useLogout()
+  const navigate = useNavigate()
 
+  const handleLogout = async () => {
+    await logout()
+    navigate('/')
+  }
   return (
     <div className='navbar container'>
       <div className='navbar-logo'>
@@ -13,17 +20,29 @@ const Navbar = ({auth}) => {
       <nav className='navbar-items__container'>
         {auth?.token ?
           <div>
-            <p>{auth.username}</p>
-            <button>logout</button>
+            <NavLink className='home-nav-item' to="/account">
+              <span className="material-symbols-outlined">
+                account_circle
+              </span>
+              <p>{auth.username}</p>
+            </NavLink>
+
+
+            <button className='logout-navbar__btn' onClick={handleLogout}>
+              <span className="material-symbols-outlined">
+                logout
+              </span>
+              logout
+            </button>
           </div>
           :
           <div>
-            <NavLink className="home-nav__login" to="/login">
+            <Link className="home-nav__login" to="/login">
               Log In
-            </NavLink>
-            <NavLink className="home-nav__register" to="/register">
+            </Link>
+            <Link className="home-nav__register" to="/register">
               Register
-            </NavLink>
+            </Link>
           </div>
         }
       </nav>

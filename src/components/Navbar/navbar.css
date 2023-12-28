@@ -11,9 +11,30 @@
   font-size: 1rem;
 }
 
-.navbar-items__container div{
+.navbar-items__container > div{
   display: flex;
   gap: 2rem;
+}
+
+.home-nav-item{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: .4rem;
+  cursor: pointer;
+}
+
+.logout-navbar__btn{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: .2rem;
+  border: none;
+  font-size: 1rem;
+  background: inherit;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
 }
 
 .home-nav__register{
@@ -25,3 +46,8 @@
   color: white;
 }
 
+@media only screen and (max-width: 900px){
+  .home-nav__register{
+    display: none;
+  }
+}
