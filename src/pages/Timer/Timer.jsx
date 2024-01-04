@@ -10,6 +10,7 @@ import TimerCircle from '../../components/TimerCircle/TimerCircle';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import useWindowSize from '../../hooks/useWindowSize';
 import MobileNavbar from '../../components/MobileNavbar/MobileNavbar';
+import notificationSound from '../../assets/notification-sound.mp3'
 
 
 const Timer = () => {
@@ -27,7 +28,7 @@ const Timer = () => {
   const [initialSessionTime, setInitialSessionTime] = useState(1)
   const [sessionProgress, setSessionProgress] = useState(0)
   const [sessionTimerStarted, setSessionTimerStarted] = useState(false)
-
+  const [isMounted, setIsMounted] = useState(false)
   //get window size
   const width = useWindowSize()
   
@@ -100,9 +101,28 @@ const Timer = () => {
     }
   }
 
+  const playNotificationSound = async() => {
+    if (!notificationSound || !isMounted) {
+      console.error('Notification sound is not defined')
+      return
+    }
+    try{
+      const audio = new Audio(notificationSound)
+      audio.addEventListener('canplaythrough', async () => {
+        await audio.play();
+        audio.addEventListener('ended', () => {
+          audio.pause()
+        })
+      })
+    }catch(error){
+      console.error(error)
+    }
+  }
+
   //session countdown
   useEffect(() => {
     let intervalId = null
+    setIsMounted(true)
     if (isSessionTimeRunning) {
 
       if (sessionTimeLeft > 0) {
@@ -127,6 +147,7 @@ const Timer = () => {
         }
 
         setShowPulser(true)
+        playNotificationSound()
         if (updatedSessionCounter !== sessionData.numberOfSessions) {
           setTimeout(() => {
             setSessionProgress(0)
@@ -147,6 +168,7 @@ const Timer = () => {
     }
     return (() => {
       clearInterval(intervalId)
+      setIsMounted(false)
     })
   }, [isSessionTimeRunning, sessionTimeLeft])
 
@@ -166,6 +188,7 @@ const Timer = () => {
   //break countdown
   useEffect(() => {
     let intervalId = null
+    setIsMounted(true)
     if (isBreakTimeRunning) {
 
       if (breakTimeLeft > 0) {
@@ -178,6 +201,7 @@ const Timer = () => {
         setIsBreakTimeRunning(false)
         setBreakTimerStarted(false)
         setShowPulser(true)
+        playNotificationSound()
         setTimeout(() => {
           setBreakProgress(0)
           setSessionTimeLeft(1 * 60)
@@ -191,6 +215,7 @@ const Timer = () => {
     }
     return (() => {
       clearInterval(intervalId)
+      setIsMounted(false)
     })
   }, [isBreakTimeRunning, breakTimeLeft])
 

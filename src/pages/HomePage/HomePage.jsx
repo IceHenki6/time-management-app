@@ -1,9 +1,7 @@
 import { useContext } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { AuthContext } from "../../context/authContext"
 import './HomePage.css'
-import homePageIllustration1 from "../../images/hp1.svg"
-import homePageIllustration2 from "../../images/hp2.svg"
 import screenshot1 from "../../images/screentodo.png"
 import screenshot2 from "../../images/screentimeselector.png"
 import screenshot3 from "../../images/screenstats.png"
@@ -27,7 +25,6 @@ const AppDescription = ({ title, description, img }) => {
 }
 
 const HomePage = () => {
-  const navigate = useNavigate()
   const { auth } = useContext(AuthContext)
 
   return (

@@ -87,7 +87,6 @@ const SignUp = () => {
 
   return (
     <div className="login-container">
-      <img src={loginWaves} id="login-waves__img" alt="" />
       <div className="login">
         <h1 id="login-title">Sign in</h1>
         <form onSubmit={handleSignIn} className="login-form">
@@ -100,7 +99,7 @@ const SignUp = () => {
             />
           ))}
 
-          <button className="button" id="signin-btn" type="submit">Sign in</button>
+          <button className="login-btn" type="submit">Sign in</button>
         </form>
       </div>
     </div>

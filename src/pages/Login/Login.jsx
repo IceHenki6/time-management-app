@@ -1,6 +1,6 @@
 import { useContext, useState } from "react"
 import { AuthContext } from "../../context/authContext"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import notificationContext from "../../context/notificationContext"
 import Notification from "../../components/Notification"
 import loginWaves from "../../images/loginwaves.svg"
@@ -48,7 +48,6 @@ const Login = () => {
 
   return (
     <div className="login-container">
-      <img src={loginWaves} id="login-waves__img" alt="" />
       <div className="login">
         <h1 id="login-title">Log in</h1>
         <form onSubmit={handleLogin} className="login-form">
@@ -77,7 +76,8 @@ const Login = () => {
               maxLength={20}
             />
           </div>
-          <button className="button" id="login-btn" type="submit">Log in</button>
+          <button className="login-btn" type="submit">Log in</button>
+          <p>are you new here? <Link to="/register">Create a new account</Link></p>
           <Notification />
         </form>
       </div>

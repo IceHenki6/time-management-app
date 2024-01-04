@@ -26,7 +26,6 @@ export const TaskContextProvider = ({children}) => {
 
   useEffect(() => {
     setCurrentTask(currentTask)
-    console.log('bla')
   }, [currentTask])
 
   useEffect(() => {
