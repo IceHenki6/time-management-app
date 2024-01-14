@@ -24,14 +24,14 @@ const Timer = () => {
   const [sessionTimeLeft, setSessionTimeLeft] = useState(1 * 60)
   const [showFinishedSessions, setShowFinishedSessions] = useState(false)
   const [sessionCounter, setSessionCounter] = useState(0)
- 
+
   const [initialSessionTime, setInitialSessionTime] = useState(1)
   const [sessionProgress, setSessionProgress] = useState(0)
   const [sessionTimerStarted, setSessionTimerStarted] = useState(false)
   const [isMounted, setIsMounted] = useState(false)
   //get window size
   const width = useWindowSize()
-  
+
 
   //breakTime
   const [isBreakTimeRunning, setIsBreakTimeRunning] = useState(false)
@@ -68,7 +68,6 @@ const Timer = () => {
     }
 
     const updatedTime = task.totalTime + totalTime
-    console.log(`updated time: ${updatedTime}`)
 
     const newTaskObj = {
       "name": task.name,
@@ -76,7 +75,6 @@ const Timer = () => {
       "totalTime": updatedTime
     }
 
-    console.log(`updated task: ${newTaskObj}`)
     try {
       await axiosPrivate.post('/api/sessions', newObj)
       await axiosPrivate.put(`/api/tasks/${task.id}`, newTaskObj)
@@ -101,12 +99,12 @@ const Timer = () => {
     }
   }
 
-  const playNotificationSound = async() => {
+  const playNotificationSound = async () => {
     if (!notificationSound || !isMounted) {
       console.error('Notification sound is not defined')
       return
     }
-    try{
+    try {
       const audio = new Audio(notificationSound)
       audio.addEventListener('canplaythrough', async () => {
         await audio.play();
@@ -114,7 +112,7 @@ const Timer = () => {
           audio.pause()
         })
       })
-    }catch(error){
+    } catch (error) {
       console.error(error)
     }
   }
@@ -244,11 +242,12 @@ const Timer = () => {
 
   const selectTime = (newSessionData) => {
     setSessionData(newSessionData)
-    setShowTimeSelectors(!showTimeSelectors)
+    toggleTimeSelector()
   }
 
-  const breakBackground = isBreakTimeRunning ? { 'color': 'var(--main-font-color' } : { 'color': 'var(--very-light-grey)' }
-  const sessionBackground = isSessionTimeRunning ? { 'color': 'var(--main-font-color' } : { 'color': 'var(--very-light-grey)' }
+  const toggleTimeSelector = () => {
+    setShowTimeSelectors(!showTimeSelectors)
+  }
 
   return (
     <div className="page-container timer-container">
@@ -256,33 +255,36 @@ const Timer = () => {
       <MobileNavbar />
       <div className="timer">
         {sessionData && <div className="time-display__container">
-          {(isSessionTimeRunning || !sessionTimerStarted || !isBreakTimeRunning) && <TimerCircle 
+          {(isSessionTimeRunning || !sessionTimerStarted || !isBreakTimeRunning) && <TimerCircle
             width={400}
-            radius={ width > 768 ? 190 : 145} 
-            percentage={sessionProgress} 
-            title={"Session"} 
+            radius={width > 768 ? 190 : 145}
+            percentage={sessionProgress}
+            title={"Session"}
             minutes={time.minutes}
             seconds={time.seconds}
             sessionCounter={sessionCounter}
             numberOfSessions={sessionData.numberOfSessions}
-            />
+          />
           }
-          {isBreakTimeRunning && <TimerCircle 
+          {isBreakTimeRunning && <TimerCircle
             width={400}
-            radius={width > 768 ? 190 : 145} 
-            percentage={breakProgress} 
-            title={"Break"} 
+            radius={width > 768 ? 190 : 145}
+            percentage={breakProgress}
+            title={"Break"}
             minutes={bTime.minutes}
             seconds={bTime.seconds}
-            />
+          />
           }
           {showPulser && <div className="pulser"></div>}
         </div>}
 
 
 
-        <div>
+        <div className='timer-buttons__container'>
           {!sessionTimerStarted && <button className="start__btn" onClick={handleStart}>Start</button>}
+          {!sessionTimerStarted && <button className='toggle-time-selectors__btn' onClick={toggleTimeSelector}><span className="material-symbols-outlined">
+            chronic
+          </span></button>}
           {sessionTimerStarted && <button className='cancel__btn' onClick={handleGoBack}>
             <span className="material-symbols-outlined">
               cancel
@@ -292,7 +294,7 @@ const Timer = () => {
         </div>
         {showFinishedSessions && <FinishedSession timeFocused={sessionCounter * sessionData.sessionTime} />}
         {/* {(timeLeft === 0 && showFinishedTimer) && <FinishedTimer task={task} saveTask={saveTask} />} */}
-        {showTimeSelectors && <TimeSelector selectTime={selectTime} />}
+        {showTimeSelectors && <TimeSelector selectTime={selectTime}/>}
       </div>
     </div>
   )

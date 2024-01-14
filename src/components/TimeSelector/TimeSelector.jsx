@@ -80,11 +80,6 @@ const TimeSelector = ({ selectTime }) => {
       </div>
 
       <button className="goto-timer__btn" onClick={addSessionData}>Select Time</button>
-      <button className="close-btn" onClick={handleCancel}>
-        <span className="material-symbols-outlined">
-          close
-        </span>
-      </button>
     </div>
   )
 }

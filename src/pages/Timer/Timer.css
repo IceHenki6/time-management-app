@@ -188,6 +188,25 @@
 }
 
 
+.timer-buttons__container{
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 400px;
+}
+
+.toggle-time-selectors__btn{
+  position: absolute;
+  padding: 1em;
+  left: 0;
+  border-radius: 5px;
+  box-shadow: var(--light-shadow);
+  border: none;
+  cursor: pointer;
+  background-color: var(--main-color);
+}
+
 .start__btn{
   cursor: pointer;
   font-size: 22px;
