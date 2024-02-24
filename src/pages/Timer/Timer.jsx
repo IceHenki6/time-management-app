@@ -21,11 +21,13 @@ const Timer = () => {
   const axiosPrivate = useAxiosPrivate()
 
   const [isSessionTimeRunning, setIsSessionTimeRunning] = useState(false)
-  const [sessionTimeLeft, setSessionTimeLeft] = useState(1 * 60)
+  const [sessionTimeLeft, setSessionTimeLeft] = useState(0)
   const [showFinishedSessions, setShowFinishedSessions] = useState(false)
   const [sessionCounter, setSessionCounter] = useState(0)
 
-  const [initialSessionTime, setInitialSessionTime] = useState(1)
+  const [numberOfSessions, setNumberOfSesisons] = useState()
+
+  const [initialSessionTime, setInitialSessionTime] = useState(0)
   const [sessionProgress, setSessionProgress] = useState(0)
   const [sessionTimerStarted, setSessionTimerStarted] = useState(false)
   const [isMounted, setIsMounted] = useState(false)
@@ -36,7 +38,7 @@ const Timer = () => {
   //breakTime
   const [isBreakTimeRunning, setIsBreakTimeRunning] = useState(false)
   const [breakTimeLeft, setBreakTimeLeft] = useState(null)
-  const [initialBreakTime, setInitialBreakTime] = useState(1)
+  const [initialBreakTime, setInitialBreakTime] = useState(0)
   const [breakProgress, setBreakProgress] = useState(0)
   const [breakTimerStarted, setBreakTimerStarted] = useState(false)
 
@@ -241,6 +243,11 @@ const Timer = () => {
   }
 
   const selectTime = (newSessionData) => {
+    setSessionTimeLeft(newSessionData.sessionTime * 60)
+    setInitialSessionTime(newSessionData.sessionTime)
+    setNumberOfSesisons(newSessionData.numberOfSessions)
+
+    setInitialBreakTime(newSessionData.breakTime)
     setSessionData(newSessionData)
     toggleTimeSelector()
   }
@@ -254,7 +261,7 @@ const Timer = () => {
       <Sidebar />
       <MobileNavbar />
       <div className="timer">
-        {sessionData && <div className="time-display__container">
+        <div className="time-display__container">
           {(isSessionTimeRunning || !sessionTimerStarted || !isBreakTimeRunning) && <TimerCircle
             width={400}
             radius={width > 768 ? 190 : 145}
@@ -263,7 +270,7 @@ const Timer = () => {
             minutes={time.minutes}
             seconds={time.seconds}
             sessionCounter={sessionCounter}
-            numberOfSessions={sessionData.numberOfSessions}
+            numberOfSessions={numberOfSessions}
           />
           }
           {isBreakTimeRunning && <TimerCircle
@@ -276,7 +283,7 @@ const Timer = () => {
           />
           }
           {showPulser && <div className="pulser"></div>}
-        </div>}
+        </div>
 
 
 
@@ -292,7 +299,7 @@ const Timer = () => {
             Cancel
           </button>}
         </div>
-        {showFinishedSessions && <FinishedSession timeFocused={sessionCounter * sessionData.sessionTime} />}
+        {showFinishedSessions && <FinishedSession timeFocused={sessionCounter * initialSessionTime} />}
         {/* {(timeLeft === 0 && showFinishedTimer) && <FinishedTimer task={task} saveTask={saveTask} />} */}
         {showTimeSelectors && <TimeSelector selectTime={selectTime}/>}
       </div>
