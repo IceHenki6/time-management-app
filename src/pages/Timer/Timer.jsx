@@ -1,5 +1,5 @@
 import './Timer.css'
-import { React, useState, useEffect, useContext } from "react";
+import { React, useState, useEffect, useContext, useRef } from "react";
 import { TaskContext } from '../../context/taskContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -12,6 +12,7 @@ import useWindowSize from '../../hooks/useWindowSize';
 import MobileNavbar from '../../components/MobileNavbar/MobileNavbar';
 import notificationSound from '../../assets/notification-sound.mp3'
 
+import { getMinutes, getSeconds } from '../../helpers/timeHelper' 
 
 const Timer = () => {
   const { getTask, setTask } = useContext(TaskContext)
@@ -20,27 +21,33 @@ const Timer = () => {
 
   const axiosPrivate = useAxiosPrivate()
 
-  const [isSessionTimeRunning, setIsSessionTimeRunning] = useState(false)
-  const [sessionTimeLeft, setSessionTimeLeft] = useState(0)
+  //const [isSessionTimeRunning, setIsSessionTimeRunning] = useState(false)
+  //const [sessionTimeLeft, setSessionTimeLeft] = useState(0)
   const [showFinishedSessions, setShowFinishedSessions] = useState(false)
   const [sessionCounter, setSessionCounter] = useState(0)
 
   const [numberOfSessions, setNumberOfSesisons] = useState()
 
-  const [initialSessionTime, setInitialSessionTime] = useState(0)
+  const [initialSessionTime, setInitialSessionTime] = useState(null)
   const [sessionProgress, setSessionProgress] = useState(0)
-  const [sessionTimerStarted, setSessionTimerStarted] = useState(false)
+
+  const [sessionStarted, setSessionStarted] = useState(false)
+  const [timerRunning, setTimerRunning] = useState(false)
+  const [timeLeft, setTimeLeft] = useState(null)
+  const [isSession, setIsSession] = useState(true)
+  const [stageTitle, setStageTitle] = useState('Session')
+  // const [sessionTimerStarted, setSessionTimerStarted] = useState(false)
   const [isMounted, setIsMounted] = useState(false)
   //get window size
   const width = useWindowSize()
 
 
   //breakTime
-  const [isBreakTimeRunning, setIsBreakTimeRunning] = useState(false)
-  const [breakTimeLeft, setBreakTimeLeft] = useState(null)
-  const [initialBreakTime, setInitialBreakTime] = useState(0)
+  // const [isBreakTimeRunning, setIsBreakTimeRunning] = useState(false)
+  // const [breakTimeLeft, setBreakTimeLeft] = useState(null)
+  const [initialBreakTime, setInitialBreakTime] = useState(null)
   const [breakProgress, setBreakProgress] = useState(0)
-  const [breakTimerStarted, setBreakTimerStarted] = useState(false)
+  // const [breakTimerStarted, setBreakTimerStarted] = useState(false)
 
   //pulser
   const [showPulser, setShowPulser] = useState(false)
@@ -51,15 +58,15 @@ const Timer = () => {
   const navigate = useNavigate()
 
 
-  const [time, setTime] = useState({
-    minutes: initialSessionTime.toString().padStart(2, '0'),
-    seconds: '00'
-  })
+  // const [time, setTime] = useState({
+  //   minutes: initialSessionTime.toString().padStart(2, '0'),
+  //   seconds: '00'
+  // })
 
-  const [bTime, setBTime] = useState({
-    minutes: initialBreakTime.toString().padStart(2, '0'),
-    seconds: '00'
-  })
+  // const [bTime, setBTime] = useState({
+  //   minutes: initialBreakTime.toString().padStart(2, '0'),
+  //   seconds: '00'
+  // })
 
 
   const saveSessionWithTask = async (totalTime) => {
@@ -119,136 +126,247 @@ const Timer = () => {
     }
   }
 
-  //session countdown
-  useEffect(() => {
-    let intervalId = null
-    setIsMounted(true)
-    if (isSessionTimeRunning) {
+  //fixed timer
+  const workerRef = useRef(null);
 
-      if (sessionTimeLeft > 0) {
-        intervalId = setInterval(() => {
-          setSessionTimeLeft(prevTime => prevTime - 1)
-          setSessionProgress((initialSessionTime * 60 - sessionTimeLeft) / (initialSessionTime * 60) * 100)
-        }, 1000)
-      } else {
-        clearInterval(intervalId)
-        setIsSessionTimeRunning(false)
-        // setSessionTimerStarted(false)
+  const startTimer = (time) => {
+    if (workerRef.current) {
+      console.log('terminates')
+      workerRef.current.terminate()
+    }
+    setTimerRunning(true)
 
-        const updatedSessionCounter = sessionCounter + 1
-        setSessionCounter(updatedSessionCounter)
+    workerRef.current = new Worker(new URL('../../workers/timerWorker.js', import.meta.url))
 
-        // console.log('session saved!')
-        if (task) {
-          const totalTime = updatedSessionCounter * sessionData.sessionTime
-          saveSessionWithTask(totalTime)
-        } else {
-          saveSession()
+    console.log(isSession)
+
+    // const duration = isSession ? sessionDuration : breakDuration
+    // console.log(duration)
+
+
+    workerRef.current.postMessage({ time })
+
+    workerRef.current.onmessage = function (e) {
+      setTimeLeft(e.data)
+      setSessionProgress((time - e.data) / (time) * 100)
+      if (e.data === 0) {
+        setTimerRunning(false)
+        console.log('terminates')
+        workerRef.current.terminate()
+        workerRef.current = null
+        if(isSession) {
+          setSessionCounter(sessionCounter + 1)
         }
-
-        setShowPulser(true)
-        playNotificationSound()
-        if (updatedSessionCounter !== sessionData.numberOfSessions) {
-          setTimeout(() => {
-            setSessionProgress(0)
-            setBreakTimeLeft(1 * 60)
-            setIsBreakTimeRunning(true)
-            setBreakTimerStarted(true)
-            setShowPulser(false)
-          }, 5000)
-        } else {
-          setTimeout(() => {
-            setShowPulser(false)
-            setShowFinishedSessions(true)
-          }, 5000)
-        }
+        setIsSession(!isSession)
+        //finishSession()
       }
-    } else {
-      clearInterval(intervalId)
     }
-    return (() => {
-      clearInterval(intervalId)
-      setIsMounted(false)
-    })
-  }, [isSessionTimeRunning, sessionTimeLeft])
+    console.log('executes')
+  }
+
+  const stopTimer = () => {
+    if (workerRef.current) {
+      setTimerRunning(false)
+      console.log('terminates')
+      workerRef.current.terminate()
+      workerRef.current = null
+    }
+  }
 
   useEffect(() => {
-    const minutes = Math.floor(sessionTimeLeft / 60)
-    const seconds = sessionTimeLeft % 60
-
-    const newTime = {
-      minutes: minutes.toString().padStart(2, '0'),
-      seconds: seconds.toString().padStart(2, '0')
-    }
-
-    setTime(newTime)
-  }, [sessionTimeLeft])
-
-
-  //break countdown
-  useEffect(() => {
-    let intervalId = null
     setIsMounted(true)
-    if (isBreakTimeRunning) {
+    if (sessionStarted) {
+      if (sessionCounter < numberOfSessions) {
+        if (!isSession) {
+          console.log('FINISHING SESSIon')
+          if(task){
+            console.log('A session should be saved to a task')
+          } else {
+            console.log('A session should be saved')
+          }
+          //setSessionCounter(sessionCounter + 1)
+          setShowPulser(true)
+          playNotificationSound()
+          setTimeout(() => {
+            setStageTitle('Break')
+            setShowPulser(false)
+            startTimer(initialBreakTime)
+          }, 4000);
+        } else {
+          console.log('break finished')
+          //setIsSession(true)
+          setShowPulser(true)
+          playNotificationSound()
+          setTimeout(() => {
+            setStageTitle('Session')
+            setShowPulser(false)
+            startTimer(initialSessionTime)
+          }, 4000);
+        }
 
-      if (breakTimeLeft > 0) {
-        intervalId = setInterval(() => {
-          setBreakTimeLeft(prevTime => prevTime - 1)
-          setBreakProgress((initialBreakTime * 60 - breakTimeLeft) / (initialBreakTime * 60) * 100)
-        }, 1000)
+
       } else {
-        clearInterval(intervalId)
-        setIsBreakTimeRunning(false)
-        setBreakTimerStarted(false)
+        if(task){
+          const totalTime = sessionData.sessionTime * sessionCounter
+          console.log(`A session should be saved to a task, total time: ${totalTime}, current session: ${sessionCounter}`)
+        } else {
+          console.log('A session should be saved')
+        }
         setShowPulser(true)
         playNotificationSound()
         setTimeout(() => {
-          setBreakProgress(0)
-          setSessionTimeLeft(1 * 60)
-          setIsSessionTimeRunning(true)
-          // setSessionTimerStarted(true)
+          stopTimer()
           setShowPulser(false)
-        }, 5000)
+          setShowFinishedSessions(true)
+        }, 4000);
       }
-    } else {
-      clearInterval(intervalId)
     }
     return (() => {
-      clearInterval(intervalId)
       setIsMounted(false)
     })
-  }, [isBreakTimeRunning, breakTimeLeft])
+  }, [isSession])
 
-  useEffect(() => {
-    const minutes = Math.floor(breakTimeLeft / 60)
-    const seconds = breakTimeLeft % 60
+  //session countdown
+  // useEffect(() => {
+  //   let intervalId = null
+  //   setIsMounted(true)
+  //   if (isSessionTimeRunning) {
 
-    const newTime = {
-      minutes: minutes.toString().padStart(2, '0'),
-      seconds: seconds.toString().padStart(2, '0')
-    }
+  //     if (sessionTimeLeft > 0) {
+  //       intervalId = setInterval(() => {
+  //         setSessionTimeLeft(prevTime => prevTime - 1)
+  //         setSessionProgress((initialSessionTime * 60 - sessionTimeLeft) / (initialSessionTime * 60) * 100)
+  //       }, 1000)
+  //     } else {
+  //       clearInterval(intervalId)
+  //       setIsSessionTimeRunning(false)
+  //       // setSessionTimerStarted(false)
 
-    setBTime(newTime)
-  }, [breakTimeLeft])
+  //       const updatedSessionCounter = sessionCounter + 1
+  //       setSessionCounter(updatedSessionCounter)
+
+  //       // console.log('session saved!')
+  //       if (task) {
+  //         const totalTime = updatedSessionCounter * sessionData.sessionTime
+  //         saveSessionWithTask(totalTime)
+  //       } else {
+  //         saveSession()
+  //       }
+
+  //       setShowPulser(true)
+  //       playNotificationSound()
+  //       if (updatedSessionCounter !== sessionData.numberOfSessions) {
+  //         setTimeout(() => {
+  //           setSessionProgress(0)
+  //           setBreakTimeLeft(1 * 60)
+  //           setIsBreakTimeRunning(true)
+  //           setBreakTimerStarted(true)
+  //           setShowPulser(false)
+  //         }, 5000)
+  //       } else {
+  //         setTimeout(() => {
+  //           setShowPulser(false)
+  //           setShowFinishedSessions(true)
+  //         }, 5000)
+  //       }
+  //     }
+  //   } else {
+  //     clearInterval(intervalId)
+  //   }
+  //   return (() => {
+  //     clearInterval(intervalId)
+  //     setIsMounted(false)
+  //   })
+  // }, [isSessionTimeRunning, sessionTimeLeft])
+
+  // useEffect(() => {
+  //   const minutes = Math.floor(sessionTimeLeft / 60)
+  //   const seconds = sessionTimeLeft % 60
+
+  //   const newTime = {
+  //     minutes: minutes.toString().padStart(2, '0'),
+  //     seconds: seconds.toString().padStart(2, '0')
+  //   }
+
+  //   setTime(newTime)
+  // }, [sessionTimeLeft])
+
+
+  // //break countdown
+  // useEffect(() => {
+  //   let intervalId = null
+  //   setIsMounted(true)
+  //   if (isBreakTimeRunning) {
+
+  //     if (breakTimeLeft > 0) {
+  //       intervalId = setInterval(() => {
+  //         setBreakTimeLeft(prevTime => prevTime - 1)
+  //         setBreakProgress((initialBreakTime * 60 - breakTimeLeft) / (initialBreakTime * 60) * 100)
+  //       }, 1000)
+  //     } else {
+  //       clearInterval(intervalId)
+  //       setIsBreakTimeRunning(false)
+  //       setBreakTimerStarted(false)
+  //       setShowPulser(true)
+  //       playNotificationSound()
+  //       setTimeout(() => {
+  //         setBreakProgress(0)
+  //         setSessionTimeLeft(1 * 60)
+  //         setIsSessionTimeRunning(true)
+  //         // setSessionTimerStarted(true)
+  //         setShowPulser(false)
+  //       }, 5000)
+  //     }
+  //   } else {
+  //     clearInterval(intervalId)
+  //   }
+  //   return (() => {
+  //     clearInterval(intervalId)
+  //     setIsMounted(false)
+  //   })
+  // }, [isBreakTimeRunning, breakTimeLeft])
+
+  // useEffect(() => {
+  //   const minutes = Math.floor(breakTimeLeft / 60)
+  //   const seconds = breakTimeLeft % 60
+
+  //   const newTime = {
+  //     minutes: minutes.toString().padStart(2, '0'),
+  //     seconds: seconds.toString().padStart(2, '0')
+  //   }
+
+  //   setBTime(newTime)
+  // }, [breakTimeLeft])
 
   const handleGoBack = () => {
+    stopTimer()
     setTask(null)
     navigate('/todo')
   }
 
 
+  // const handleStart = () => {
+  //   setIsSessionTimeRunning(true)
+  //   setSessionTimerStarted(true)
+  // }
+  
   const handleStart = () => {
-    setIsSessionTimeRunning(true)
-    setSessionTimerStarted(true)
+    setSessionStarted(true)
+    startTimer(initialSessionTime)
   }
 
   const selectTime = (newSessionData) => {
-    setSessionTimeLeft(newSessionData.sessionTime * 60)
-    setInitialSessionTime(newSessionData.sessionTime)
+    //setInitialSessionTime(newSessionData.sessionTime * 60)
+    const sessionTimeSeconds = newSessionData.sessionTime * 60
+    setInitialSessionTime(60)
     setNumberOfSesisons(newSessionData.numberOfSessions)
 
-    setInitialBreakTime(newSessionData.breakTime)
+    //setInitialBreakTime(newSessionData.breakTime * 60)
+    const breakTimeSeconds = newSessionData.breakTime * 60
+    setInitialBreakTime(20)
     setSessionData(newSessionData)
+
+    setTimeLeft(isSession ? sessionTimeSeconds : breakTimeSeconds)
     toggleTimeSelector()
   }
 
@@ -262,37 +380,29 @@ const Timer = () => {
       <MobileNavbar />
       <div className="timer">
         <div className="time-display__container">
-          {(isSessionTimeRunning || !sessionTimerStarted || !isBreakTimeRunning) && <TimerCircle
+          {(sessionStarted || initialSessionTime) && <TimerCircle
             width={400}
             radius={width > 768 ? 190 : 145}
             percentage={sessionProgress}
-            title={"Session"}
-            minutes={time.minutes}
-            seconds={time.seconds}
+            title={stageTitle}
+            minutes={getMinutes(timeLeft).toString().padStart(2, '0')}
+            seconds={getSeconds(timeLeft).toString().padStart(2, '0')}
             sessionCounter={sessionCounter}
             numberOfSessions={numberOfSessions}
           />
           }
-          {isBreakTimeRunning && <TimerCircle
-            width={400}
-            radius={width > 768 ? 190 : 145}
-            percentage={breakProgress}
-            title={"Break"}
-            minutes={bTime.minutes}
-            seconds={bTime.seconds}
-          />
-          }
+
           {showPulser && <div className="pulser"></div>}
         </div>
 
 
 
         <div className='timer-buttons__container'>
-          {!sessionTimerStarted && <button className="start__btn" onClick={handleStart}>Start</button>}
-          {!sessionTimerStarted && <button className='toggle-time-selectors__btn' onClick={toggleTimeSelector}><span className="material-symbols-outlined">
+          {!sessionStarted && <button className="start__btn" onClick={handleStart}>Start</button>}
+          {!sessionStarted && <button className='toggle-time-selectors__btn' onClick={toggleTimeSelector}><span className="material-symbols-outlined">
             chronic
           </span></button>}
-          {sessionTimerStarted && <button className='cancel__btn' onClick={handleGoBack}>
+          {sessionStarted && <button className='cancel__btn' onClick={handleGoBack}>
             <span className="material-symbols-outlined">
               cancel
             </span>
@@ -301,7 +411,7 @@ const Timer = () => {
         </div>
         {showFinishedSessions && <FinishedSession timeFocused={sessionCounter * initialSessionTime} />}
         {/* {(timeLeft === 0 && showFinishedTimer) && <FinishedTimer task={task} saveTask={saveTask} />} */}
-        {showTimeSelectors && <TimeSelector selectTime={selectTime}/>}
+        {showTimeSelectors && <TimeSelector selectTime={selectTime} />}
       </div>
     </div>
   )
