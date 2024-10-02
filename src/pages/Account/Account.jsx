@@ -3,6 +3,7 @@ import Sidebar from "../../components/Sidebar/Sidebar"
 import './account.css'
 import useAxiosPrivate from "../../hooks/useAxiosPrivate"
 
+
 const Account = () => {
   const [user, setUser] = useState(null)
   const [username, setUsername] = useState('')

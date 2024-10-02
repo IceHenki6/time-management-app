@@ -1,6 +1,7 @@
 import { useState } from "react"
-import loginWaves from "../../images/loginwaves.svg"
+import axios from "../../api/axios"
 import './SignIn.css'
+import { useNavigate } from "react-router-dom"
 
 const SignInput = (props) => {
   const { handleChange, error, label, ...inputProps } = props
@@ -80,9 +81,29 @@ const SignUp = () => {
     setValues({...values, [target.name]: target.value})
   }
 
-  const handleSignIn = (event) => {
+  const navigate = useNavigate()
+
+  const handleSignIn = async (event) => {
     event.preventDefault()
+    const credentials = {
+      "email" : values['email'],
+      "username" : values['username'],
+      "password" : values['password']
+    }
     console.log("signin in...")
+    try {
+      await axios.post(
+        '/api/register', 
+        credentials,
+        {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true
+        } 
+      )
+      navigate('/login')
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (
