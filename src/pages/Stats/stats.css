@@ -221,7 +221,7 @@
 @media only screen and (max-width: 1024px) {
   .stats{
     grid-template-areas: 
-      ". . ."
+      "mobile-navbar mobile-navbar mobile-navbar"
       "chart-container chart-container chart-container"
       "chart-container chart-container chart-container"
       "chart-container chart-container chart-container";

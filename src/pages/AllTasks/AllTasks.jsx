@@ -1,5 +1,6 @@
 
 import Sidebar from "../../components/Sidebar/Sidebar"
+import MobileNavbar from "../../components/MobileNavbar/MobileNavbar";
 import Tasks from '../../components/Task/Tasks';
 import NoTasks from '../../components/NoTasks/NoTasks'
 import './AllTasks.css'
@@ -20,6 +21,7 @@ const AllTasks = () => {
   return (
     <div className="page-container all-tasks__container">
       <Sidebar />
+      <MobileNavbar />
       <div className="all-tasks">
         <h2 className='all-tasks__title'>Tasks</h2>
         {allTasks.length > 0 && <Tasks tasks={allTasks} removeTask={removeTask} />}

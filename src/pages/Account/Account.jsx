@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import Sidebar from "../../components/Sidebar/Sidebar"
 import './account.css'
 import useAxiosPrivate from "../../hooks/useAxiosPrivate"
+import MobileNavbar from "../../components/MobileNavbar/MobileNavbar"
 
 
 const Account = () => {
@@ -73,6 +74,7 @@ const Account = () => {
   return (
     <div className="page-container account-container">
       <Sidebar />
+      <MobileNavbar />
       {username && <div className="account">
         <div className="account-title__container">
           <h1 className="account-title">Account</h1>

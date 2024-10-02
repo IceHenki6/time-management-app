@@ -6,6 +6,7 @@ import sessionHelper from "../../helpers/sessionHelper"
 import ProgressCircle from "../../components/ProgressCircle"
 import useAxiosPrivate from "../../hooks/useAxiosPrivate"
 import useWindowSize from '../../hooks/useWindowSize'
+import MobileNavbar from "../../components/MobileNavbar/MobileNavbar"
 
 const Stats = () => {
   const [dayData, setDayData] = useState([])
@@ -66,6 +67,7 @@ const Stats = () => {
   return (
     <div className="page-container stats">
       <Sidebar />
+      <MobileNavbar />
       <div className="chart-container">
         <div className="day-stats">
           <div className="day-stats__description">
