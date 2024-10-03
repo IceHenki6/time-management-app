@@ -9,6 +9,10 @@ Timefrost is a productivity app where users can use a Pomodoro timer for their s
 - **Statistics dashboard**: Users can see a statistical summary of their study time.
 - **Authentication and authorization**: Only registered users can create tasks and use the Pomodoro timer. Users can only modify or delete the tasks that belong to them.
 
+![](src/images/screentimeselector.png)
+![](src/images//timer.png)
+![](src/images/screentodo.png)
+
 ## **Technologies used**:
 - **NodeJs, Express, and MongoDb for the backend**: https://github.com/IceHenki6/time-management-app-backend
 - **ReactJs**
@@ -17,6 +21,7 @@ Timefrost is a productivity app where users can use a Pomodoro timer for their s
         - **Date-fns**: Toolset to manipulate dates
         - **Recharts**: For the charts in the stats dashboard
 - **Vite**: For setting up the project
+
 
 ## **Installation (frontend)**:
 ### Requirements:
