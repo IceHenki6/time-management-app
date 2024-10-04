@@ -217,14 +217,14 @@ const Timer = () => {
   }
 
   const selectTime = (newSessionData) => {
-    //setInitialSessionTime(newSessionData.sessionTime * 60)
+    setInitialSessionTime(newSessionData.sessionTime * 60)
     const sessionTimeSeconds = newSessionData.sessionTime * 60
-    setInitialSessionTime(60)
+    // setInitialSessionTime(60)
     setNumberOfSesisons(newSessionData.numberOfSessions)
 
-    //setInitialBreakTime(newSessionData.breakTime * 60)
+    setInitialBreakTime(newSessionData.breakTime * 60)
     const breakTimeSeconds = newSessionData.breakTime * 60
-    setInitialBreakTime(20)
+    // setInitialBreakTime(20)
     setSessionData(newSessionData)
 
     setTimeLeft(isSession ? sessionTimeSeconds : breakTimeSeconds)
