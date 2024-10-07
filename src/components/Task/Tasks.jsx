@@ -17,9 +17,6 @@ const Task = ({ task, removeTask }) => {
     removeTask(id)
   }
 
-  // const handleContinue = () => {
-  //   resumeTask(task)
-  // }
 
   const isoDate = new Date(task.updatedAt)
   const date = `${isoDate.getDate()}-${isoDate.getMonth() + 1}-${isoDate.getFullYear()}`
@@ -60,14 +57,11 @@ const Task = ({ task, removeTask }) => {
             delete
           </span>
         </div>
-        {/* <button onClick={handleContinue} className="continue-btn">Continue</button> */}
       </div>
     </div>
   )
 }
 const Tasks = ({ tasks, removeTask }) => {
-  // const { setTask } = useContext(TaskContext)
-  // const navigate = useNavigate()
   const reversed = tasks.reverse()
 
   return (

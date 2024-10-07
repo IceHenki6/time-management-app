@@ -39,7 +39,6 @@ const Stats = () => {
           const monthTimeWorked = sessionHelper.timeWorkedMonth(sessionData, currentDate)
           const yearTimeWorked = sessionHelper.timeWorkedYear(sessionData, currentDate)
           
-          // console.log(dailyProgress)
           const dailyPercentage = dailyProgress.hoursWorked <= dailyGoal
             ? dailyProgress.hoursWorked / dailyGoal * 100
             : 100
@@ -55,7 +54,6 @@ const Stats = () => {
         }
 
       } catch (error) {
-        //TODO: show error messages
         console.error(error)
       }
     }
@@ -127,7 +125,6 @@ const Stats = () => {
         </div>
 
         {windowWidth > 768 && <div className="week-stats">
-          {/* <h1 id="week">Your focus time this week</h1> */}
           <div className="week-chart">
             <ResponsiveContainer width="99%" height="100%" >
               <BarChart data={weekData}>

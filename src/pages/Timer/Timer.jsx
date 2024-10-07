@@ -35,7 +35,6 @@ const Timer = () => {
   const [timeLeft, setTimeLeft] = useState(null)
   const [isSession, setIsSession] = useState(true)
   const [stageTitle, setStageTitle] = useState('Session')
-  // const [sessionTimerStarted, setSessionTimerStarted] = useState(false)
   const [isMounted, setIsMounted] = useState(false)
   //get window size
   const width = useWindowSize()
@@ -98,7 +97,7 @@ const Timer = () => {
     }
   }
 
-  //fixed timer
+
   const workerRef = useRef(null);
 
   const startTimer = (time) => {
@@ -111,9 +110,6 @@ const Timer = () => {
     workerRef.current = new Worker(new URL('../../workers/timerWorker.js', import.meta.url))
 
     console.log(isSession)
-
-    // const duration = isSession ? sessionDuration : breakDuration
-    // console.log(duration)
 
 
     workerRef.current.postMessage({ time })
@@ -130,7 +126,6 @@ const Timer = () => {
           setSessionCounter(sessionCounter + 1)
         }
         setIsSession(!isSession)
-        //finishSession()
       }
     }
     console.log('executes')
@@ -159,7 +154,6 @@ const Timer = () => {
             console.log('A session should be saved')
             handleSaveSession()
           }
-          //setSessionCounter(sessionCounter + 1)
           setShowPulser(true)
           playNotificationSound()
           setTimeout(() => {
@@ -169,7 +163,6 @@ const Timer = () => {
           }, 4000);
         } else {
           console.log('break finished')
-          //setIsSession(true)
           setShowPulser(true)
           playNotificationSound()
           setTimeout(() => {
